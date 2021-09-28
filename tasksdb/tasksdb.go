@@ -20,7 +20,7 @@ type Task struct {
 	Email    string    `datastore:"email"`
 	Likes    int       `datastore:"likes"`
 	Owner    string    `datastore:"creator"`
-	TaskDesc string    `datastore:"taskname"`
+	TaskDesc string    `datastore:"TaskName"`
 	Name     string    // The ID used in the datastore.
 }
 

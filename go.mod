@@ -1,4 +1,4 @@
-module drehnstrom.com/go-pets
+module olga-lvl1.com/go-pets
 
 go 1.17
 

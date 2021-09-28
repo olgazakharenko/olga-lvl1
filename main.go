@@ -6,8 +6,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"olga-lvl1.com/todo-list/tasksdb"
 	"os"
+	"drehnstrom.com/go-pets/petsdb"
 )
 
 var projectID string 
@@ -42,15 +42,15 @@ func main() {
 }
 	
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	var tasks []tasksdb.Task
-	tasks, error := tasksdb.GetTasks()
+	var pets []petsdb.Pet
+	pets, error := petsdb.GetPets()
 	if error != nil {
 		fmt.Print(error)
 	}
 
 	data := HomePageData{
-		PageTitle: "To Do List",
-		Tasks:     tasks,
+		PageTitle: "Pets Home Page",
+		Pets: pets,
 	}
 
 	var tpl = template.Must(template.ParseFiles("templates/index.html", "templates/layout.html"))
@@ -69,7 +69,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	data := AboutPageData{
-		PageTitle: "To Do List",
+		PageTitle: "About Go Pets",
 	}
 
 	var tpl = template.Must(template.ParseFiles("templates/about.html", "templates/layout.html"))
@@ -89,7 +89,7 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 // HomePageData for Index template
 type HomePageData struct {
 	PageTitle string
-	Tasks     []tasksdb.Task
+	Pets []petsdb.Pet
 }
 
 // AboutPageData for About template

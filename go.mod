@@ -1,4 +1,4 @@
-module olga-lvl1.com/todo-list
+module drehnstrom.com/go-pets
 
 go 1.17
 

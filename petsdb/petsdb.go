@@ -1,4 +1,4 @@
-package tasksdb
+package petsdb
 
 import (
 	
@@ -13,34 +13,34 @@ import (
 
 var projectID string
 
-// Task model stored in Datastore
-type Task struct {
+// Pet model stored in Datastore
+type Pet struct {
 	Added   time.Time `datastore:"added"`
 	Email   string    `datastore:"email"`
 	Likes   int       `datastore:"likes"`
 	Owner   string    `datastore:"owner"`
-	Taskname string    `datastore:"taskname"`
+	Petname string    `datastore:"petname"`
 	Name    string     // The ID used in the datastore.
 }
 
-// GetTasks Returns all tasks from datastore ordered by likes in Desc Order
-func GetTasks() ([]Task, error) {
+// GetPets Returns all pets from datastore ordered by likes in Desc Order
+func GetPets() ([]Pet, error) {
 
 	projectID = os.Getenv("GOOGLE_CLOUD_PROJECT")
 	if projectID == "" {
 		log.Fatal(`You need to set the environment variable "GOOGLE_CLOUD_PROJECT"`)
 	}
 
-	var tasks []Task
+	var pets []Pet
 	ctx := context.Background()
 	client, err := datastore.NewClient(ctx, projectID)
 	if err != nil {
 		log.Fatalf("Could not create datastore client: %v", err)
 	}
 
-	// Create a query to fetch all Task entities".
-	query := datastore.NewQuery("Task").Order("-likes")
-	keys, err := client.GetAll(ctx, query, &tasks)
+	// Create a query to fetch all Pet entities".
+	query := datastore.NewQuery("Pet").Order("-likes")
+	keys, err := client.GetAll(ctx, query, &pets)
 	if err != nil {
 		fmt.Println(err)
 		return nil, err
@@ -48,9 +48,9 @@ func GetTasks() ([]Task, error) {
 
 	// Set the id field on each Task from the corresponding key.
 	for i, key := range keys {
-		tasks[i].Name = key.Name
+		pets[i].Name = key.Name
 	}
 
 	client.Close()
-	return tasks, nil
+	return pets, nil
 }

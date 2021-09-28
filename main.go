@@ -6,8 +6,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"olga.com/go-tasks/tasksdb"
 	"os"
+	"drehnstrom.com/go-pets/petsdb"
 )
 
 var projectID string 
@@ -42,8 +42,8 @@ func main() {
 }
 	
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	var pets []tasksdb.Task
-	pets, error := tasksdb.GetTasks()
+	var pets []petsdb.Pet
+	pets, error := petsdb.GetPets()
 	if error != nil {
 		fmt.Print(error)
 	}
@@ -89,7 +89,7 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 // HomePageData for Index template
 type HomePageData struct {
 	PageTitle string
-	Tasks []tasksdb.Task
+	Pets []petsdb.Pet
 }
 
 // AboutPageData for About template

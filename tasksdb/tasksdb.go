@@ -18,10 +18,9 @@ type Task struct {
 	Added    time.Time `datastore:"added"`
 	Caption  string    `datastore:"caption"`
 	Email    string    `datastore:"email"`
-	Image    string    `datastore:"image"`
 	Likes    int       `datastore:"likes"`
-	Owner    string    `datastore:"owner"`
-	TaskDesc string    `datastore:"petname"`
+	Owner    string    `datastore:"creator"`
+	TaskDesc string    `datastore:"taskname"`
 	Name     string    // The ID used in the datastore.
 }
 

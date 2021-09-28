@@ -1,4 +1,4 @@
-module drehnstrom.com/go-pets
+module olga.com/go-tasks
 
 go 1.17
 

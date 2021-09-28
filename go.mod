@@ -1,4 +1,4 @@
-module olga-lvl1.com/go-pets
+module olga-lvl1.com/todo-list
 
 go 1.17
 

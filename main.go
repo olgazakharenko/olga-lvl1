@@ -6,7 +6,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	"olga-lvl1.com/go-pets/tasksdb"
+	"olga-lvl1.com/todo-list/tasksdb"
 	"os"
 )
 
@@ -42,15 +42,15 @@ func main() {
 }
 	
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	var pets []tasksdb.Task
-	pets, error := tasksdb.GetTasks()
+	var tasks []tasksdb.Task
+	tasks, error := tasksdb.GetTasks()
 	if error != nil {
 		fmt.Print(error)
 	}
 
 	data := HomePageData{
 		PageTitle: "To Do List",
-		Pets: pets,
+		Tasks:     tasks,
 	}
 
 	var tpl = template.Must(template.ParseFiles("templates/index.html", "templates/layout.html"))
@@ -89,7 +89,7 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 // HomePageData for Index template
 type HomePageData struct {
 	PageTitle string
-	Pets []tasksdb.Task
+	Tasks     []tasksdb.Task
 }
 
 // AboutPageData for About template

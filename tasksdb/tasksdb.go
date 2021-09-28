@@ -21,7 +21,7 @@ type Task struct {
 	Name  string    // The ID used in the datastore.
 }
 
-// GetTasks Returns all pets from datastore ordered by likes in Desc Order
+// GetTasks Returns all tasks from datastore ordered by likes in Desc Order
 func GetTasks() ([]Task, error) {
 
 	projectID = os.Getenv("GOOGLE_CLOUD_PROJECT")

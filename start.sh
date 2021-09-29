@@ -1,6 +1,6 @@
 #!/bin/bash
-
-project_id="roi-takeoff-user96"
+echo "we are inside of script"
+project_id="roi-takeoff-user94"
 if [ $GOOGLE_CLOUD_PROJECT == "" ]; then
 	export GOOGLE_CLOUD_PROJECT=$project_id
 fi

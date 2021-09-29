@@ -35,6 +35,7 @@ func main() {
 	// The rest of the routes
 	mux.HandleFunc("/", indexHandler)
 	mux.HandleFunc("/about", aboutHandler)
+	mux.HandleFunc("/add", addHandler)
 
 
 	log.Printf("Webserver listening on Port: %s", port)

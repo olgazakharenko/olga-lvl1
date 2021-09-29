@@ -7,7 +7,6 @@ db_name = "go-pets-db"
 gcp_service_list = {
   type = list(string)
   default = [
-    "cloudresourcemanager.googleapis.com",
-    "serviceusage.googleapis.com"
+    "cloudbuild.googleapis.com"
   ]
 }

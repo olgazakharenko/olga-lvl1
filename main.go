@@ -86,6 +86,38 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("About Page Served")
 }
 
+func addHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodGet {
+		data := AddPageData{
+			PageTitle: "Add Pet",
+		}
+
+		var tpl = template.Must(template.ParseFiles("templates/add.html", "templates/layout.html"))
+
+		buf := &bytes.Buffer{}
+		err := tpl.Execute(buf, data)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Println(err.Error())
+			return
+		}
+		buf.WriteTo(w)
+
+		log.Println("Add Page Served")
+	} else {
+		// Add Pet Here
+		pet := petsdb.Pet{
+			Email:    r.FormValue("email"),
+			Owner: r.FormValue("owner"),
+			Petname:     r.FormValue("petname"),
+		}
+		petsdb.AddPet(pet)
+
+		// Go back to home page
+		http.Redirect(w, r, "/", http.StatusFound)
+	}
+}
+
 // HomePageData for Index template
 type HomePageData struct {
 	PageTitle string
@@ -97,3 +129,7 @@ type AboutPageData struct {
 	PageTitle string
 }
 
+// AboutPageData for About template
+type AddPageData struct {
+	PageTitle string
+}

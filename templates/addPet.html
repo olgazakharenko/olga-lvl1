@@ -1,26 +1,26 @@
-{{template "layout" .}}
-
-{{define "content"}}
+{% extends "layout.html" %} {% block content %}
 
 <div class="container">
-    <hr />
+    <hr/>
     <div class="row">
-        <!--Card-->
-        {{range .Pets}}
-        <div class="col-lg-4 col-md-12 mb-4">
-            <div class="card">
-                <!--Card content-->
-                <div class="card-body">
-                    <!--Title-->
-                    <h4 class="card-title">{{.Petname}}</h4>
-                    <!--Text-->
-                    <p class="card-text">{{.Owner}}</p>
-                    <div><span class="like" id="key">&#128077;</span></div>
-                    <div><span class="like" id="like-key">Likes: {{.Likes}}</span></div>
-                </div>
+
+        <form method="post" action="/add" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Pet Name:</label>
+                <input type="text" class="form-control" id="petname" name="petname">
             </div>
-        </div>
-        {{end}}
+            <div class="form-group">
+                <label for="type">Caption:</label>
+                <textarea class="form-control" id="comments" name="caption"></textarea>
+            </div>
+
+            <input type="hidden" name="email" id="useremail" />
+            <input type="hidden" name="owner" id="username" />
+
+            <button type="submit" class="btn btn-default">Add</button>
+        </form>
     </div>
 </div>
-{{end}}
+
+
+{% endblock %}

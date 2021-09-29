@@ -92,7 +92,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 			PageTitle: "Add Pet",
 		}
 
-		var tpl = template.Must(template.ParseFiles("templates/add.html", "templates/layout.html"))
+		var tpl = template.Must(template.ParseFiles("templates/addPet.html", "templates/layout.html"))
 
 		buf := &bytes.Buffer{}
 		err := tpl.Execute(buf, data)

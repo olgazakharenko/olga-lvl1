@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = "/Users/olga.zakharenko/Downloads/roi-takeoff-user94-97226f575f54.json"
+//  credentials = "/Users/olga.zakharenko/Downloads/roi-takeoff-user94-97226f575f54.json"
   project = var.gcp_project_id
   region = var.region
   zone = var.zone

@@ -1,4 +1,5 @@
 provider "google" {
+  credentials = "/Users/olga.zakharenko/Downloads/roi-takeoff-user94-97226f575f54.json"
   project = var.gcp_project_id
   region = var.region
   zone = var.zone
@@ -23,6 +24,10 @@ resource "google_cloud_run_service" "default" {
     spec {
       containers {
         image = "gcr.io/roi-takeoff-user94/go-pets:v1"
+        env {
+          name = "GOOGLE_CLOUD_PROJECT"
+          value = var.gcp_project_id
+        }
         ports {
           container_port = var.port
         }

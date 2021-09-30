@@ -32,6 +32,7 @@ resource "google_cloud_run_service" "pets-api" {
       }
     }
   }
+  depends_on = [google_project_service.pets-api]
 }
 
 data "google_iam_policy" "noauth" {

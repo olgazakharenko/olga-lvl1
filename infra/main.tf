@@ -1,5 +1,4 @@
 provider "google" {
-  //  credentials = "/Users/olga.zakharenko/Downloads/roi-takeoff-user94-97226f575f54.json"
   project = var.gcp_project_id
   region = var.region
   zone = var.zone
@@ -8,17 +7,13 @@ locals {
   cloud_run_url = google_cloud_run_service.pets-api.status[0].url
 }
 
-//resource "google_app_engine_application" "app" {
-//  project = var.gcp_project_id
-//  location_id = var.region
-//  database_type = "CLOUD_DATASTORE_COMPATIBILITY"
-//}
 resource "google_project_service" "api" {
   for_each = toset(var.gcp_service_list)
 
   service = each.value
   disable_dependent_services = true
 }
+
 resource "google_cloud_run_service" "pets-api" {
   name = "pets-api"
   location = var.region
@@ -46,6 +41,11 @@ data "google_iam_policy" "noauth" {
       "allUsers",
     ]
   }
+}
+
+resource "google_service_account" "pets-api-sa" {
+  account_id   = "pets-api-sa"
+  display_name = "Service account for pets API"
 }
 
 resource "google_cloud_run_service_iam_policy" "noauth" {

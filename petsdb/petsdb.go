@@ -57,6 +57,10 @@ func GetPets() ([]Pet, error) {
 	return pets, nil
 }
 
+func GetPetsById() (Pet, error) {
+
+}
+
 func AddPet(pet Pet) {
 	id := uuid.New()
 	projectID = os.Getenv("GOOGLE_CLOUD_PROJECT")

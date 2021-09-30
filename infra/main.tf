@@ -73,35 +73,6 @@ resource "google_endpoints_service" "pets-api" {
     x-google-backend:
       address: "${local.cloud_run_url}"
       protocol: h2
-    definitions:
-          PostPet:
-            type: object
-            properties:
-              added:
-                type: string
-              email:
-                type: string
-              likes:
-                type: int
-              owner:
-                type: string
-              petname:
-                type: string
-          GetPet:
-            type: object
-            properties:
-              id:
-                type: string
-              added:
-                type: string
-              email:
-                type: string
-              owner:
-                type: string
-              petname:
-                type: string
-              likes:
-                type: int
     paths:
           /pets:
             get:
@@ -114,8 +85,6 @@ resource "google_endpoints_service" "pets-api" {
                   description: A JSON array of the pets
                   schema:
                     type: array
-                    items:
-                      $ref: '#/definitions/GetPet'
             post:
               summary: Create a pet.
               operationId: createPet
@@ -126,7 +95,7 @@ resource "google_endpoints_service" "pets-api" {
                   name: pets
                   description: The pets to create
                   schema:
-                    $ref: '#/definitions/PostPet'
+                    type: string
               responses:
                 '200':
                   description: OK
@@ -146,7 +115,7 @@ resource "google_endpoints_service" "pets-api" {
                 '200':
                   description: A JSON array of pets
                   schema:
-                    $ref: '#/definitions/GetPet'
+                    type: array
   EOF
 
   depends_on = [

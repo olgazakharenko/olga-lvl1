@@ -53,7 +53,7 @@ func handleRequests() {
 	myRouter.HandleFunc("/getPets", getPets).Methods("GET")
 	myRouter.HandleFunc("/gePts/{id}",getPetbyID).Methods("GET")
 	myRouter.HandleFunc("/addPet", addPet).Methods("POST")
-	myRouter.HandleFunc("/pets/{id}", deletePet).Methods("DELETE")
+	//myRouter.HandleFunc("/pets/{id}", deletePet).Methods("DELETE")
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -81,7 +81,7 @@ func getPetbyID(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Key: %s\n", key)
 
-	Pet, error := petsdb.GetPetsById()
+	Pet, error := petsdb.GetPetsById(key)
 	if error != nil {
 		fmt.Print(error)
 	}

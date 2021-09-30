@@ -1,7 +1,6 @@
 package petsdb
 
 import (
-	
 	"context"
 	"fmt"
 	"github.com/google/uuid"
@@ -22,7 +21,7 @@ type Pet struct {
 	Likes   int       `datastore:"likes"`
 	Owner   string    `datastore:"owner"`
 	Petname string    `datastore:"petname"`
-	Name    string     // The ID used in the datastore.
+	Name    string    // The ID used in the datastore.
 }
 
 // GetPets Returns all pets from datastore ordered by likes in Desc Order
@@ -57,8 +56,29 @@ func GetPets() ([]Pet, error) {
 	return pets, nil
 }
 
-func GetPetsById() (Pet, error) {
+func GetPetsById(id string) ([]Pet, error) {
+	ctx := context.Background()
+	client, err := datastore.NewClient(ctx, projectID)
+	if err != nil {
+		log.Fatalf("Could not create datastore client: %v", err)
+	}
 
+	// Create a query to fetch Pet by Id".
+	var pets []Pet
+	query := datastore.NewQuery("Pet").Filter("Name", id)
+	keys, err := client.GetAll(ctx, query, &pets)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+
+	// Set the id field on each Task from the corresponding key.
+	for i, key := range keys {
+		pets[i].Name = key.Name
+	}
+
+	client.Close()
+	return pets, nil
 }
 
 func AddPet(pet Pet) {

@@ -20,6 +20,6 @@ variable "gcp_service_list" {
     "cloudapis.googleapis.com",
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
-    "iam.googleapis.co"
+    "iam.googleapis.com"
   ]
 }

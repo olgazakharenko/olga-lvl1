@@ -44,7 +44,7 @@ func main() {
 	myRouter.HandleFunc("/add", addHandler)
 	myRouter.HandleFunc("/pets", getPets).Methods("GET")
 	myRouter.HandleFunc("/pets/{id}",getPetbyID).Methods("GET")
-	myRouter.HandleFunc("/addPet", addPet).Methods("POST")
+	myRouter.HandleFunc("/pets", addPet).Methods("POST")
 	//handleRequests()
 
 	log.Printf("Webserver listening on Port: %s", port)

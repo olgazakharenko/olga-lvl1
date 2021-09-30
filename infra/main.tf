@@ -1,5 +1,5 @@
 provider "google" {
-//  credentials = "/Users/olga.zakharenko/Downloads/roi-takeoff-user94-97226f575f54.json"
+  //  credentials = "/Users/olga.zakharenko/Downloads/roi-takeoff-user94-97226f575f54.json"
   project = var.gcp_project_id
   region = var.region
   zone = var.zone
@@ -57,8 +57,8 @@ resource "google_cloud_run_service_iam_policy" "noauth" {
 }
 
 resource "google_endpoints_service" "pets-api" {
-  service_name   = "${replace(local.cloud_run_url, "https://", "")}"
-  project        = var.gcp_project_id
+  service_name = "${replace(local.cloud_run_url, "https://", "")}"
+  project = var.gcp_project_id
   openapi_config = <<EOF
     swagger: '2.0'
     info:
@@ -73,54 +73,84 @@ resource "google_endpoints_service" "pets-api" {
     x-google-backend:
       address: "${local.cloud_run_url}"
       protocol: h2
+    definitions:
+          PostPet:
+            type: object
+            properties:
+              added:
+                type: string
+              email:
+                type: string
+              owner:
+                type: string
+              petname:
+                type: string
+              likes:
+                type: int
+          GetPet:
+            type: object
+            properties:
+              id:
+                type: string
+              added:
+                type: string
+              email:
+                type: string
+              owner:
+                type: string
+              petname:
+                type: string
+              likes:
+                type: int
     paths:
-      /pets:
-        get:
-          summary: Returns a list of pets.
-          operationId: getListOfEvents
-          produces:
-            - application/json
-          responses:
-            '200':
-              description: A JSON array of the pets
-              schema:
-                type: array
-                items:
-                  $ref: '#/definitions/GetPet'
-        post:
-          summary: Create a pet.
-          operationId: createPet
-          consumes:
-            - application/json
-          parameters:
-            - in: body
-              name: pets
-              description: The pets to create
-              schema:
-                $ref: '#/definitions/PostPet'
-          responses:
-            '200':
-              description: OK
-      /pets/{id}:
-        get:
-          summary: Get a pets by ID
-          operationId: getPetById
-          parameters:
-          - in: path
-            name: id
-            type: string
-            required: true
-            description: String ID of the pet to get
-          produces:
-          - application/json
-          responses:
-            '200':
-              description: A JSON array of pets
-              schema:
-                $ref: '#/definitions/GetPet'
+          /pets:
+            get:
+              summary: Returns a list of pets.
+              operationId: getListOfEvents
+              produces:
+                - application/json
+              responses:
+                '200':
+                  description: A JSON array of the pets
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/definitions/GetPet'
+            post:
+              summary: Create a pet.
+              operationId: createPet
+              consumes:
+                - application/json
+              parameters:
+                - in: body
+                  name: pets
+                  description: The pets to create
+                  schema:
+                    $ref: '#/definitions/PostPet'
+              responses:
+                '200':
+                  description: OK
+          /pets/{id}:
+            get:
+              summary: Get a pets by ID
+              operationId: getPetById
+              parameters:
+              - in: path
+                name: id
+                type: string
+                required: true
+                description: String ID of the pet to get
+              produces:
+              - application/json
+              responses:
+                '200':
+                  description: A JSON array of pets
+                  schema:
+                    $ref: '#/definitions/GetPet'
   EOF
 
-  depends_on  = [google_cloud_run_service.pets-api]
+  depends_on = [
+    google_cloud_run_service.pets-api]
 }
 
 

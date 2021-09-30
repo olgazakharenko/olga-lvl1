@@ -81,12 +81,12 @@ resource "google_endpoints_service" "pets-api" {
                 type: string
               email:
                 type: string
+              likes:
+                type: int
               owner:
                 type: string
               petname:
                 type: string
-              likes:
-                type: int
           GetPet:
             type: object
             properties:

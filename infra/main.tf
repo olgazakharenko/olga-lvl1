@@ -21,7 +21,7 @@ resource "google_cloud_run_service" "pets-api" {
   template {
     spec {
       containers {
-        image = "gcr.io/roi-takeoff-user94/go-pets:v1"
+        image = "gcr.io/roi-takeoff-user94/go-pets:latest"
         env {
           name = "GOOGLE_CLOUD_PROJECT"
           value = var.gcp_project_id

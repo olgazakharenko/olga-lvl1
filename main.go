@@ -16,7 +16,6 @@ import (
 )
 
 var projectID string
-//var Pets []petsdb.Pet
 
 func main() {
 	projectID = os.Getenv("GOOGLE_CLOUD_PROJECT")
@@ -33,36 +32,40 @@ func main() {
 	log.Printf("Port set to: %s", port)
 
 	fs := http.FileServer(http.Dir("assets"))
-	mux := http.NewServeMux()
+	//mux := http.NewServeMux()
+	myRouter := mux.NewRouter().StrictSlash(true)
 
 	// This serves the static files in the assets folder
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	myRouter.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
 	// The rest of the routes
-	mux.HandleFunc("/", indexHandler)
-	mux.HandleFunc("/about", aboutHandler)
-	mux.HandleFunc("/add", addHandler)
-	handleRequests()
+	myRouter.HandleFunc("/", indexHandler)
+	myRouter.HandleFunc("/about", aboutHandler)
+	myRouter.HandleFunc("/add", addHandler)
+	myRouter.HandleFunc("/pets", getPets).Methods("GET")
+	myRouter.HandleFunc("/pets/{id}",getPetbyID).Methods("GET")
+	myRouter.HandleFunc("/addPet", addPet).Methods("POST")
+	//handleRequests()
 
 	log.Printf("Webserver listening on Port: %s", port)
-	http.ListenAndServe(":"+port, mux)
+	http.ListenAndServe(":"+port, myRouter)
 }
 
-func handleRequests() {
-	myRouter := mux.NewRouter().StrictSlash(true)
-	myRouter.HandleFunc("/getPets", getPets).Methods("GET")
-	myRouter.HandleFunc("/gePts/{id}",getPetbyID).Methods("GET")
-	myRouter.HandleFunc("/addPet", addPet).Methods("POST")
-	//myRouter.HandleFunc("/pets/{id}", deletePet).Methods("DELETE")
-
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
-	}
-
-	fmt.Printf("Server running on Port: %s\n", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), myRouter))
-}
+//func handleRequests() {
+//	//myRouter := mux.NewRouter().StrictSlash(true)
+//	myRouter.HandleFunc("/getPets", getPets).Methods("GET")
+//	myRouter.HandleFunc("/gePts/{id}",getPetbyID).Methods("GET")
+//	myRouter.HandleFunc("/addPet", addPet).Methods("POST")
+//	//myRouter.HandleFunc("/pets/{id}", deletePet).Methods("DELETE")
+//
+//	port := os.Getenv("PORT")
+//	if port == "" {
+//		port = "8080"
+//	}
+//
+//	fmt.Printf("Server running on Port: %s\n", port)
+//	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), myRouter))
+//}
 
 func getPets(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Endpoint Hit: getPets")

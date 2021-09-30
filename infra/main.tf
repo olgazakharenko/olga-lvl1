@@ -7,7 +7,7 @@ locals {
   cloud_run_url = google_cloud_run_service.pets-api.status[0].url
 }
 
-resource "google_project_service" "api" {
+resource "google_project_service" "pets-api" {
   for_each = toset(var.gcp_service_list)
 
   service = each.value

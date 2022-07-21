@@ -1,0 +1,22 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            # Full git history is needed to get a proper list of changed files within `super-linter`
+            fetch-depth: 0
+      - name: Lint Code Base
+        uses: github/super-linter/slim@v4
+        env:
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_PYTHON_BLACK	: true
+          VALIDATE_CLOJURE: true
+          VALIDATE_GO: true
+          VALIDATE_DOCKERFILE_HADOLINT: true
+#          VALIDATE_ALL_CODEBASE: false
